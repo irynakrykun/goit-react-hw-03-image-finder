@@ -1,7 +1,6 @@
 import { Component } from 'react';
-import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import Searchbar from './Searchbar/Searchbar';
-// import fetchImage from './API';
+const KEY= '31580624-e5f87d112d57e9afad49661fb'
 
 export default class App extends Component {
   state = {
@@ -11,37 +10,19 @@ export default class App extends Component {
   handelFormSubmit = tagName => {
     this.setState({ tagName });
   };
-
-  componentDidMount() {
-    
-    const BASE_URL = 'https://pixabay.com/api/';
-    const KEY = '31580624-e5f87d112d57e9afad49661fb';
- 
-    fetch(
-      `${BASE_URL}?q=city&page=1&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
-    )
+  componentDidMount(){
+    fetch(`https://pixabay.com/api/?q={this.state.tagName}&key=${KEY}&image_type=photo&orientation=horizontal&safesearch=true&per_page=12&page=1`)
       .then(response => response.json())
-       .then(console.log())
-  };
-     
-      
-
-  
+    .then(console.log())
+}
+ 
 
   render() {
     return (
-      <div
-        style={{
-          height: '100vh',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          fontSize: 40,
-          color: '#010101',
-        }}
-      >
+      <div>
+            
         <Searchbar onSubmit={this.handelFormSubmit} />
-        <ImageGalleryItem tagName={this.setState.tagName} />
+        {/* <ImageGalleryItem tagName={this.setState.tagName} /> */}
       </div>
     );
   }
