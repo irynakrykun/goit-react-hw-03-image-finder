@@ -1,6 +1,13 @@
 import { Component } from 'react';
+import { CiSearch } from 'react-icons/ci';
+import {
+  SearchbarHeader,
+  SearchForm,
+  SearchFormButton,
+  SearchFormInput,
+} from './Searchbar.styled';
 
-export default class Searchbar extends Component {
+ class Searchbar extends Component {
   state = {
     tagName: '',
   };
@@ -8,25 +15,24 @@ export default class Searchbar extends Component {
     this.setState({ tagName: e.currentTarget.value.toLowerCase() });
   };
   handelSubmit = e => {
-      e.preventDefault();
-      if (this.state.tagName.trim() === '') {
-          alert('Enter a value')
-          return;
-      }
-      this.props.onSubmit(this.state.tagName)
+    e.preventDefault();
+    if (this.state.tagName.trim() === '') {
+      alert('Enter a value');
+      return;
+    }
+    this.props.onSubmit(this.state.tagName);
     this.setState({ tagName: '' });
   };
   render() {
     return (
-      <header class="searchbar">
-        <form class="form" onSubmit={this.handelSubmit}>
-          <button type="submit" class="button">
-            <span class="button-label">Search</span>
-          </button>
+      <SearchbarHeader>
+        <SearchForm onSubmit={this.handelSubmit}>
+          <SearchFormButton type="submit">
+            <CiSearch />
+          </SearchFormButton>
 
-          <input
+          <SearchFormInput
             onChange={this.handelTagNameChange}
-            class="input"
             type="text"
             autoComplete="off"
             autoFocus
@@ -34,8 +40,9 @@ export default class Searchbar extends Component {
             name="tagName"
             value={this.state.tagName}
           />
-        </form>
-      </header>
+        </SearchForm>
+      </SearchbarHeader>
     );
   }
 }
+export default Searchbar;
