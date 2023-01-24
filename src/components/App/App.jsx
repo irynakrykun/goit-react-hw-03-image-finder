@@ -21,7 +21,7 @@ export default class App extends Component {
   };
 
   async componentDidUpdate(_, prevState) {
-    const { searchQuery, page, per_page } = this.state;
+    const { searchQuery, page,per_page } = this.state;
 
     if (
       prevState.page !== this.state.page ||
@@ -35,13 +35,17 @@ export default class App extends Component {
           searchQuery,
           per_page,
         });
-        this.setState({ items });
+        this.setState(prevState => ({
+          items: [...prevState.items, ...items]
+        }));
 
         if (page >= this.state.items.length) {
           this.setState({ showButton: true });
-          // } else {
-          //   this.setState({ showButton: false });
         }
+        
+        //   } else {
+        //     this.setState({ showButton: false });
+        // }
         if (items.length === 0) {
           this.setState({
             error: 'Not found. Try another value',
