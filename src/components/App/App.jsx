@@ -21,12 +21,11 @@ export default class App extends Component {
   };
 
   async componentDidUpdate(_, prevState) {
-    const { searchQuery, page,per_page } = this.state;
+    const { searchQuery, page, per_page } = this.state;
 
     if (
       prevState.page !== this.state.page ||
-      prevState.searchQuery !== this.state.searchQuery 
-    
+      prevState.searchQuery !== this.state.searchQuery
     )
       try {
         this.setState({ isLoading: true, error: null });
@@ -36,17 +35,15 @@ export default class App extends Component {
           per_page,
         });
         this.setState(prevState => ({
-          items: [...prevState.items, ...items]
+          items: [...prevState.items, ...items],
         }));
 
-        if (page >= this.state.items.length) {
+        if (page > this.state.items.length) {
           this.setState({ showButton: true });
         }
         
-        //   } else {
-        //     this.setState({ showButton: false });
-        // }
         if (items.length === 0) {
+          this.setState({ showButton: false });
           this.setState({
             error: 'Not found. Try another value',
           });
@@ -74,8 +71,7 @@ export default class App extends Component {
   };
   loadMore = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
-     
-  }
+  };
 
   render() {
     const { searchQuery, showModal, isLoading, showButton, error, modalUrl } =

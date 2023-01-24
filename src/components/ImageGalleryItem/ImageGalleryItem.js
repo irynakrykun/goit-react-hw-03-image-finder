@@ -16,7 +16,7 @@ const ImageGalleryItem = ({ url, largeImageURL, onClick, tags }) => {
 
 ImageGalleryItem.propTypes = {
   url: PropTypes.string.isRequired,
-  largeImageURL: PropTypes.string.isRequired,
+  largeImageURL: PropTypes.string,
   tags: PropTypes.string.isRequired,
 
   onClick: PropTypes.func.isRequired,
