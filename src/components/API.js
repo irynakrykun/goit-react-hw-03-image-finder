@@ -9,6 +9,7 @@ const fetchImage = async ({ page = '', searchQuery = '' }) => {
       key: '31580624-e5f87d112d57e9afad49661fb',
       image_type: 'photo',
       orientation: 'horizontal',
+      per_page:12,
     },
   });
   // return response.data.hits;
