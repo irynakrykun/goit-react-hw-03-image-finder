@@ -12,7 +12,6 @@ export default class App extends Component {
     searchQuery: '',
     items: [],
     page: 1,
-    per_page: 12,
     isLoading: false,
     error: null,
     modalUrl: '',
@@ -21,7 +20,7 @@ export default class App extends Component {
   };
 
   async componentDidUpdate(_, prevState) {
-    const { searchQuery, page, per_page } = this.state;
+    const { searchQuery, page } = this.state;
 
     if (
       prevState.page !== this.state.page ||
@@ -29,21 +28,19 @@ export default class App extends Component {
     )
       try {
         this.setState({ isLoading: true, error: null });
-        const items = await fetchImage({
+        const response = await fetchImage({
           page,
           searchQuery,
-          per_page,
         });
+
+        const items = response.hits;
+        console.log(items);
         this.setState(prevState => ({
           items: [...prevState.items, ...items],
+          showButton: page < Math.ceil(response.totalHits / 12),
         }));
 
-        if (page > this.state.items.length) {
-          this.setState({ showButton: true });
-        }
-        
         if (items.length === 0) {
-          this.setState({ showButton: false });
           this.setState({
             error: 'Not found. Try another value',
           });
@@ -65,7 +62,7 @@ export default class App extends Component {
   handelFormSubmit = tagName => {
     this.setState({
       items: [],
-      per_page: 12,
+      page: 1,
       searchQuery: tagName,
     });
   };
